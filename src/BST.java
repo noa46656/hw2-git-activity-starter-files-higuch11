@@ -54,7 +54,9 @@ public class BST {
 
     public void insert(Integer item) {
         if (this.isEmpty()) {
-            this.left = new BST(item);
+            this.root = new item;
+            this.right = new BST();
+            this.left = new BST();
         }
         else if (item <= root) {
             this.left.insert(item);
@@ -64,7 +66,16 @@ public class BST {
 
 
     public void delete(Integer item) {
-        // TODO implement me!
+        if (this.isEmpty()) {
+            return;
+        }
+        else if (item.equals(this.root)) {
+            this.deleteRoot();
+        } else if (item < root) {
+            this.left.delete(item);
+        } else {
+            this.right.delete(item);
+        }
     }
 
     private void deleteRoot() {
