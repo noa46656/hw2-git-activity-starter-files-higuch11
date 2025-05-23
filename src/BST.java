@@ -31,8 +31,7 @@ public class BST {
     // TODO Task: Implement the BST methods.
 
     public boolean isEmpty() {
-        // TODO implement me!
-        return false;
+        return (root == null);
     }
 
     public boolean contains(Integer item) {
@@ -54,7 +53,9 @@ public class BST {
 
 
     public void insert(Integer item) {
-        // TODO implement me!
+        if (this.isEmpty()) {
+            this.left = new BST(item);
+        }
     }
 
 
