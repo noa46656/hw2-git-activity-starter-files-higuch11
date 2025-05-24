@@ -54,53 +54,75 @@ public class BST {
 
     public void insert(Integer item) {
         if (this.isEmpty()) {
-            this.root = new item;
-            this.right = new BST();
+            this.root = item;
             this.left = new BST();
+            this.right = new BST();
         }
-        else if (item <= root) {
+        else if (item.compareTo(this.root) <= 0) {
             this.left.insert(item);
         }
-        else {this.right.insert(item);}
-    }
-
-
-    public void delete(Integer item) {
-        if (this.isEmpty()) {
-            return;
-        }
-        else if (item.equals(this.root)) {
-            this.deleteRoot();
-        } else if (item < root) {
-            this.left.delete(item);
-        } else {
-            this.right.delete(item);
+        else {
+            this.right.insert(item);
         }
     }
 
     private void deleteRoot() {
-        // TODO implement me!
+        if (this.left.isEmpty() && this.right.isEmpty()) {
+            this.root = null;
+            this.left = null;
+            this.right = null;
+        }
+        else if (this.left.isEmpty()) {
+            this.root = this.right.root;
+            this.left = this.right.left;
+            this.right = this.right.right;
+        }
+        else if (this.right.isEmpty()) {
+            this.root = this.left.root;
+            this.right = this.left.right;
+            this.left = this.left.left;
+        }
+        else {
+            this.root = this.left.extractMax();
+        }
     }
 
-
     private Integer extractMax() {
-        // TODO implement me!
-        return this.root; // dummy code; replace with correct code when you implement this.
+        if (this.right.isEmpty()) {
+            Integer maxValue = this.root;
+            this.root = this.left.root;
+            this.right = this.left.right;
+            this.left = this.left.left;
+            return maxValue;
+        } else {
+            return this.right.extractMax();
+        }
     }
 
     public int height() {
-        // TODO implement me!
-        return 0; // dummy code; replace with correct code when you implement this.
+        if (this.isEmpty()) {
+            return 0;
+        }
+        return 1 + Math.max(this.left.height(), this.right.height());
     }
 
     public int count(Integer item) {
-        // TODO implement me!
-        return 0; // dummy code; replace with correct code when you implement this.
+        if (this.isEmpty()) {
+            return 0;
+        }
+        int currentCount = item.equals(this.root) ? 1 : 0;
+        if (item.compareTo(this.root) <= 0) {
+            return currentCount + this.left.count(item);
+        } else {
+            return currentCount + this.right.count(item);
+        }
     }
 
     public int getLength() {
-        // TODO implement me!
-        return 0; // dummy code; replace with correct code when you implement this.
+        if (this.isEmpty()) {
+            return 0;
+        }
+        return 1 + this.left.getLength() + this.right.getLength();
     }
 
     public static void main(String[] args) {
